@@ -27,11 +27,10 @@ namespace RabbitPublisher
             //fourth close the queue when all connections are closed
             channel.QueueDeclare("hello-queue", true, false, false);
 
-
-            while(1==1)
+            var i = 0;
+            while(i<1000)
             {
-                string message = Console.ReadLine();
-                if (message == "0") return;
+                string message = "Message->" + i;
 
                 //rabbitmq accepts the messages as byte array
                 var messageBody = Encoding.UTF8.GetBytes(message);
@@ -40,8 +39,8 @@ namespace RabbitPublisher
                 //second when didnt select an exchange, you have to send queue name
                 //third is settings
                 channel.BasicPublish(string.Empty, "hello-queue", null, messageBody);
-
-                Console.WriteLine("Message is sent");
+                i++;
+               // Console.WriteLine("Message is sent");
             }
              
 
